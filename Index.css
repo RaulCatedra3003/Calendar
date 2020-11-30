@@ -91,6 +91,7 @@ table {
     grid-template-columns: repeat(7, 1fr);
     font-size: .6em;
     max-width: 100%;
+    text-align: center;
 }
 .day {
     background: transparent;
