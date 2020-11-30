@@ -9,18 +9,20 @@
 </head>
 <body>
     <header>
-        <h1>JS Calendar</h1>
-        <button type="button" class="buttonAddEvent">Add event</button>
+        <section class="header-section">
+            <h1>JS Calendar</h1>
+            <button type="button" class="buttonAddEvent">Add event</button>
+        </section>
     </header>
     <section class="calendar">
         <section class="calendar--info">
-            <section class="calendar--prev fas fa-chevron-circle-left"></section>
-            <section class="calendar--month">Diciembre</section>
-            <section class="calendar--year">2020</section>
-            <section class="calendar--next fas fa-chevron-circle-right"></section>
+            <section class="calendar--prev fas fa-chevron-circle-left" id="prev--month"></section>
+            <section class="calendar--month" id="calendar--month"></section>
+            <section class="calendar--year" id="calendar--year"></section>
+            <section class="calendar--next fas fa-chevron-circle-right" id="next--month"></section>
         </section>
         <section class="calendar--all">
-            <section class="week-days">
+            <section class="week--days">
                 <ul class="days-list">
                     <li class="day">LUN</li>
                     <li class="day">MAR</li>
@@ -31,7 +33,7 @@
                     <li class="day">DOM</li>
                 </ul>
             </section>
-            <section class="calendar--dates">
+            <section class="calendar--dates" id="calendar--dates">
 
             </section>
         </section>
@@ -45,5 +47,6 @@
     <footer class="footer">
         <h5>&copy; Copyright 2020 · Raúl Cátedra & Estefanía Cordeiro</h5>
     </footer>
+    <script src="index.js"></script>
 </body>
 </html>

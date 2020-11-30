@@ -52,7 +52,7 @@ table {
 }
 
 /* Header style */
-header {
+.header-section {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -111,13 +111,19 @@ h1 {
     padding: 0 .4em;
 }
 
-.calendar--all {
-    border-radius: 8px;
-    padding: 8px 0;
+.calendar--days {
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	border: 1px solid #c0c0c0;
+	padding: 5px;
+	color: #acacac;
+	font-size: .6em;
 }
 
-.calendar--all{
-    background: linear-gradient(70deg, rgb(253, 211, 211), red);
+.week--days {
+	background: linear-gradient(70deg, rgb(253, 211, 211), red);
+	margin-bottom: 5px;
 }
 
 .days-list {
@@ -129,7 +135,9 @@ h1 {
 }
 .day {
     background: transparent;
-    color: rgb(65, 65, 65);
+	color: rgb(65, 65, 65);
+	border: 1px solid black;
+	padding: 8px 0;
 }
 
 .calendar--dates {
@@ -154,11 +162,27 @@ h1 {
 /* Media Query rules */
 
 @media screen and (min-width: 700px) {
-	header {
+	.header-section {
 		flex-direction: row;
 		padding: 0 20px;
 	}
 	.buttonAddEvent {
 		height: 30%;
-    }
+	}
+	.calendar--days{
+		height: 90px;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.calendar--days{
+		height: 120px;
+	}
+	.calendar {
+		width: 1086px;
+	}
+	.header-section {
+		width: 1200px;
+		margin: 0 auto;
+	}
 }
