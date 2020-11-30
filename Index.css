@@ -46,3 +46,58 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* Calendar rules */
+.calendar {
+    width: 90%;
+    position: relative;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+.calendar--info{
+    display: flex;
+    margin: 0 1.5em;
+    padding: 1.5em 0;
+    text-transform: uppercase;
+}
+
+.calendar--prev, .calendar--next {
+    cursor: pointer;
+}
+
+.calendar--prev {
+    margin-right: auto;
+}
+
+.calendar--next {
+    margin-left: auto;
+}
+
+.calendar--month {
+    padding: 0 .4em;
+}
+
+.calendar--all {
+    border-radius: 8px;
+    padding: 8px 0;
+}
+
+.calendar--all{
+    background: linear-gradient(70deg, rgb(253, 211, 211), red);;
+}
+
+.days-list {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: .6em;
+    max-width: 100%;
+}
+.day {
+    background: transparent;
+    color: rgb(65, 65, 65);
+}
+
+.calendar--dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
