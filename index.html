@@ -37,7 +37,45 @@
         </section>
     </section>
     <section  class="add--event">
-
+        <section class="form--add--event">
+            <h2 class="title--new--event">NEW EVENT</h2>
+            <label for="title" class="label--modal">Title:</label>
+            <input type="text" id="title" class ="title" name="title">
+            <label for="initial--date" class="label--modal">Initial date:</label>
+            <input type="date" id="initial--date" class="initial--date" name="initial--date">
+            <fieldset>
+                <input type="checkbox" id="check-end-date" class="check-end-date" name="check-end-date">
+                <label for="check-end-date" class="label--modal">End date</label>
+            </fieldset>
+            <label for="end--date">End date:</label>
+            <input type="date" id="end--date" class="end--date" name="end--date">
+            <fieldset>
+                <input type="checkbox" id="check-remind-me" class="check-remind-me" name="check-remind-me">
+                <label for="check-remind-me">Remind me when this event expires</label>
+            </fieldset>
+            <label for="time-remind-me">Time:</label>
+            <select name="time-remind-me" id="time-remind-me" class="time-remind-me">
+                <option value="5">5 min</option>
+                <option value="10">10 min</option>
+                <option value="15">15 min</option>
+                <option value="30">30 min</option>
+                <option value="60">1 h</option>
+            </select>
+            <label for="description">Description:</label>
+            <input type="text" id="description" class="description">
+            <label for="event--type">Event type:</label>
+            <select name="even--type" id="even--type" class="even--type">
+                <option value="meeting">Meeting</option>
+                <option value="personal">Personal</option>
+                <option value="study">Study</option>
+                <option value="leisure">Leisure</option>
+                <option value="other">Other</option>
+            </select>
+        </section>
+        <section class="button--modal">
+            <button class="cancel--button--modal">Cancel</button>
+            <button class="create--button--modal">Create</button>
+        </section>
     </section>
     <section class="info--event">
 

@@ -51,6 +51,10 @@ table {
 	box-sizing: border-box;
 }
 
+/* html {
+	background-color: yellow;
+} */
+
 /* Header style */
 header {
 	display: flex;
@@ -137,6 +141,42 @@ h1 {
     grid-template-columns: repeat(7, 1fr);
 }
 
+/* Modal add event style */
+.add--event {
+	border: 1px solid blue;
+	margin-top: 20px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+}
+
+.title--new--event {
+	font-weight: bold;
+	font-size: 1.5em;
+	margin: 0 auto;
+}
+
+.form--add--event {
+	display: flex;
+	flex-direction: column;
+	padding-top: 15px;
+	border: 1px solid orange;
+}
+
+.button--modal {
+	margin: 0 auto;
+}
+
+.cancel--button--modal, .create--button--modal {
+	border-radius: 10px;
+	padding: 5px 20px;
+	margin: 10px;
+}
+
+
 /* Footer style */
 .footer {
 	font-size: 0.7em;
@@ -150,6 +190,7 @@ h1 {
     bottom: 0;
     left: 0;
 }
+
 
 /* Media Query rules */
 
