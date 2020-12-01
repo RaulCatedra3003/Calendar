@@ -37,11 +37,15 @@ function printMonth (month) {
     }
     for(let i = 1; i <= getTotalMonthDays(month); i++) {
         if((currentDate.getDate() === i) && (currentDate.getMonth() === monthNumber) && (currentDate.getFullYear() === currentYear)) {
-            calendarDates.innerHTML += `<section class="calendar--days today--show">${i}</section>`
+            calendarDates.innerHTML += `<section class="calendar--days today--show">${i}<button class="button-day" id="${i}">Add event</button></section>`
         } else {
-            calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
+            calendarDates.innerHTML += `<section class="calendar--days">${i}<button class="button-day" id="${i}">Add event</button></section>`
         }
     }
+    buttonsDays = document.querySelectorAll(".button-day");
+    buttonsDays.forEach(e => {
+        e.addEventListener("click", showEventModal);
+    });
 }
 function getTotalMonthDays (month) {
     if(month === -1) {
@@ -89,10 +93,13 @@ function setNewDate() {
 
 /* Functions to show and hide de modal */
 
-function showEventModal() {
+function showEventModal(e) {
     prevMonth.removeEventListener("click", printPrevMonth);
     nextMonth.removeEventListener("click", printNextMonth);
     addEvent.removeEventListener("click", showEventModal);
+    buttonsDays.forEach(e => {
+        e.removeEventListener("click", showEventModal);
+    });
     modalContent.innerHTML = "";
     modalContent.innerHTML = `
     <section>
@@ -150,6 +157,7 @@ function showEventModal() {
         </form>
     </section>`;
 
+
     newTitle = document.getElementById("title");
     newInitialDate = document.getElementById("initial--date");
     checkEndDate = document.getElementById("check-end-date");
@@ -161,6 +169,18 @@ function showEventModal() {
     cancelButtonAddEvent = document.getElementById("cancel--button--addEvent");
     createEventButton = document.getElementById("create--new--event");
 
+    if((parseInt(e.target.id)) > 0 && (parseInt(e.target.id)) <= 31) {
+        if((parseInt(e.target.id)) < 10 && (monthNumber+1) > 10) {
+            newInitialDate.value = `${currentYear}-${monthNumber+1}-0${parseInt(e.target.id)}T00:00`;
+        } else if((parseInt(e.target.id)) < 10 && (monthNumber+1) < 10) {
+            newInitialDate.value = `${currentYear}-0${monthNumber+1}-0${parseInt(e.target.id)}T00:00`;
+        } else if ((parseInt(e.target.id)) > 10 && (monthNumber+1) < 10) {
+            newInitialDate.value = `${currentYear}-0${monthNumber+1}-${parseInt(e.target.id)}T00:00`;
+        } else if ((parseInt(e.target.id)) > 10 && (monthNumber+1) > 10) {
+            newInitialDate.value = `${currentYear}-${monthNumber+1}-${parseInt(e.target.id)}T00:00`;
+        }
+    }
+
     modalSection.classList.toggle("hidden");
 
     closeModal.addEventListener("click", hiddenModal);
@@ -171,7 +191,6 @@ function showEventModal() {
     checkRemindMe.addEventListener("click", showRemindMe);
     createEventButton.addEventListener("click", createNewEvent);
 
-    /* Create validation listeners */
     newTitle.addEventListener("blur", validateTitle);
     newTitle.addEventListener("click", hideError);
     newInitialDate.addEventListener("blur", validateInitalDate);
@@ -201,6 +220,9 @@ function hiddenModal() {
     prevMonth.addEventListener("click", printPrevMonth);
     nextMonth.addEventListener("click", printNextMonth);
     addEvent.addEventListener("click", showEventModal);
+    buttonsDays.forEach(e => {
+        e.addEventListener("click", showEventModal);
+    });
 }
 function hiddenModalClickingOut(e) {
     if(e.target.id === "modal--section") {
@@ -223,6 +245,9 @@ function hiddenModalClickingOut(e) {
         prevMonth.addEventListener("click", printPrevMonth);
         nextMonth.addEventListener("click", printNextMonth);
         addEvent.addEventListener("click", showEventModal);
+        buttonsDays.forEach(e => {
+            e.addEventListener("click", showEventModal);
+        });
     }
 }
 function hiddenModalEscape(e) {
@@ -246,6 +271,9 @@ function hiddenModalEscape(e) {
         prevMonth.addEventListener("click", printPrevMonth);
         nextMonth.addEventListener("click", printNextMonth);
         addEvent.addEventListener("click", showEventModal);
+        buttonsDays.forEach(e => {
+            e.addEventListener("click", showEventModal);
+        });
     }
 }
 function showEnDate() {

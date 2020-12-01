@@ -114,12 +114,16 @@ h1 {
 }
 .calendar--days {
 	text-align: center;
+	justify-content: center;
 	width: 100%;
 	height: 40px;
 	border: 1px solid #c0c0c0;
 	padding: 5px;
 	color: #acacac;
 	font-size: .6em;
+}
+.calendar--days:hover .button-day{
+	display: block;
 }
 .week--days {
 	background: linear-gradient(70deg, rgb(253, 211, 211), red);
@@ -147,6 +151,17 @@ h1 {
 }
 .today--show {
 	background-color: #4474f82a;
+}
+.button-day{
+	font-size: 1em;
+	border-radius: 10px;
+	border: none;
+	padding: 5px 20px;
+	margin: 5px auto;
+	box-shadow: 5px 5px rgb(153, 152, 152);
+	outline: none;
+	cursor: pointer;
+	display: none;
 }
 
 /* Modal add event style */
