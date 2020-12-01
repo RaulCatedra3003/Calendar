@@ -74,16 +74,17 @@ h1 {
 	height: fit-content;
 	max-width: 400px;
 }
-.buttonAddEvent {
+.button {
 	font-size: 1em;
-	width: 200px;
-	padding: 5px 0;
-	margin: 10px 0;
-	border-radius: 5px;
-	background-color: rgb(221, 221, 217);
-	border: 1px solid black;
-	height: 25%;
+	border-radius: 10px;
+	border: none;
+	padding: 5px 20px;
+	margin: 5px;
+	box-shadow: 5px 5px rgb(153, 152, 152);
+	outline: none;
+	cursor: pointer;
 }
+
 
 /* Calendar rules */
 
@@ -182,7 +183,8 @@ h1 {
 .title--new--event {
 	font-weight: bold;
 	font-size: 1.5em;
-	margin: 0 auto;
+	text-align: center;
+	padding-top: 20px;
 }
 .form--add--event {
 	display: flex;
@@ -216,16 +218,22 @@ h1 {
 }
 .button--modal {
 	text-align: center;
+	padding-top: 20px;
 }
-.cancel--button--modal, .create--button--modal {
-	font-size: 1em;
-	border-radius: 10px;
-	border: none;
-	padding: 5px 20px;
-	margin: 5px;
-	box-shadow: 5px 5px rgb(153, 152, 152);
+.hidden {
+	display: none;
 }
-
+.error-msg{
+	font-size: .7em;
+    color: red;
+    background-color: rgb(228, 177, 177);
+    width: fit-content;
+    padding: 5px;
+    margin: 2px 0 0 0;
+}
+.error-hiden {
+	display: none;
+}
 
 /* Footer style rules */
 
