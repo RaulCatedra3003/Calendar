@@ -38,9 +38,62 @@
             </section>
         </section>
     </section>
-    <section  class="add--event">
-
+    <section class="modal--section">
+        <section  class="add--event">
+            <p class="closed--modal far fa-times-circle"></p>
+            <section class="modal--content" id="modal--content">
+                <section class="form--add--event">
+                    <h2 class="title--new--event">NEW EVENT</h2>
+                    <label for="title" class="label--modal">Title:</label>
+                    <input type="text" id="title" class ="title input--modal" name="title">
+                    <fieldset class="fieldset--modal">
+                        <label for="initial--date" class="label--modal">Initial date:</label>
+                        <input type="datetime-local" id="initial--date" class="initial--date input--modal" name="initial--date">
+                    </fieldset>
+                    <fieldset class="fieldset--modal">
+                        <input type="checkbox" id="check-end-date" class="check-end-date input--modal" name="check-end-date">
+                        <label for="check-end-date" class="label--modal">End date</label>
+                    </fieldset>
+                    <fieldset class="fieldset--modal fieldset--hidden">
+                        <label for="end--date" class="label--modal">End date:</label>
+                        <input type="datetime-local" id="end--date" class="end--date input--modal" name="end--date">
+                    </fieldset>
+                    <fieldset class="fieldset--modal">
+                        <input type="checkbox" id="check-remind-me" class="check-remind-me input--modal" name="check-remind-me">
+                        <label for="check-remind-me" class="label--modal">Remind me when this event expires</label>
+                    </fieldset>
+                    <fieldset class="fieldset--modal fieldset--hidden">
+                        <label for="time-remind-me" class="label--modal">Time:</label>
+                        <select name="time-remind-me" id="time-remind-me" class="time-remind-me input--modal">
+                            <option value="5">5 min</option>
+                            <option value="10">10 min</option>
+                            <option value="15">15 min</option>
+                            <option value="30">30 min</option>
+                            <option value="60">1 h</option>
+                        </select>
+                    </fieldset>
+                    <label for="description" class="label--modal">Description:</label>
+                    <input type="text" id="description" class="description input--modal">
+                    <fieldset class="fieldset--modal">
+                        <label for="event--type" class="label--modal">Event type:</label>
+                        <select name="even--type" id="even--type" class="even--type input--modal">
+                            <option value="meeting">Meeting</option>
+                            <option value="personal">Personal</option>
+                            <option value="study">Study</option>
+                            <option value="leisure">Leisure</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </fieldset>
+                </section>
+                <section class="button--modal">
+                    <button class="cancel--button--modal">Cancel</button>
+                    <button class="create--button--modal">Create</button>
+                </section>
+            </section>
+            
+        </section>
     </section>
+    
     <section class="info--event">
 
     </section>
