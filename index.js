@@ -14,11 +14,13 @@ const addEvent = document.getElementById("buttonAddEvent");
 const modalSection = document.getElementById("modal--section");
 const modalContent = document.getElementById("modal--content");
 const closeModal = document.getElementById("close--modal");
+const calendarInfo = document.querySelector(".calendar--info");
 
 let titleValidate = false;
 let initialDateValidate = false;
 let endDateValidate = false;
 let remindMeValidate = false;
+let haschange = false;
 
 month.textContent = monthNames[monthNumber];
 year.textContent = currentYear.toString();
@@ -46,6 +48,7 @@ function printMonth (month) {
     buttonsDays.forEach(e => {
         e.addEventListener("click", showEventModal);
     });
+    calendarDays = document.querySelectorAll(".calendar--days");
 }
 function getTotalMonthDays (month) {
     if(month === -1) {
@@ -74,6 +77,19 @@ function printPrevMonth() {
         currentYear--;
     }
     setNewDate();
+    if(haschange === false) {
+        month.style.animation = "prevMonth .8s linear";
+        calendarDays.forEach(e => {
+            e.style.animation = "prevMonthDates .8s linear";
+        });
+        haschange = true;
+    } else {
+        month.style.animation = "nextMonth .8s linear";
+        calendarDays.forEach(e => {
+            e.style.animation = "nextMonthDates .8s linear";
+        });
+        haschange = false;
+    }
 }
 function printNextMonth() {
     if(monthNumber !== 11) {
@@ -83,6 +99,19 @@ function printNextMonth() {
         currentYear++;
     }
     setNewDate();
+    if(haschange === false) {
+        month.style.animation = "prevMonth .8s linear";
+        calendarDays.forEach(e => {
+            e.style.animation = "prevMonthDates .8s linear";
+        });
+        haschange = true;
+    } else {
+        month.style.animation = "nextMonth .8s linear";
+        calendarDays.forEach(e => {
+            e.style.animation = "nextMonthDates .8s linear";
+        });
+        haschange = false;
+    }
 }
 function setNewDate() {
     month.textContent = monthNames[monthNumber];
@@ -170,13 +199,13 @@ function showEventModal(e) {
     createEventButton = document.getElementById("create--new--event");
 
     if((parseInt(e.target.id)) > 0 && (parseInt(e.target.id)) <= 31) {
-        if((parseInt(e.target.id)) < 10 && (monthNumber+1) > 10) {
+        if((parseInt(e.target.id)) < 10 && (monthNumber+1) >= 10) {
             newInitialDate.value = `${currentYear}-${monthNumber+1}-0${parseInt(e.target.id)}T00:00`;
         } else if((parseInt(e.target.id)) < 10 && (monthNumber+1) < 10) {
             newInitialDate.value = `${currentYear}-0${monthNumber+1}-0${parseInt(e.target.id)}T00:00`;
-        } else if ((parseInt(e.target.id)) > 10 && (monthNumber+1) < 10) {
+        } else if ((parseInt(e.target.id)) >= 10 && (monthNumber+1) < 10) {
             newInitialDate.value = `${currentYear}-0${monthNumber+1}-${parseInt(e.target.id)}T00:00`;
-        } else if ((parseInt(e.target.id)) > 10 && (monthNumber+1) > 10) {
+        } else if ((parseInt(e.target.id)) >= 10 && (monthNumber+1) >= 10) {
             newInitialDate.value = `${currentYear}-${monthNumber+1}-${parseInt(e.target.id)}T00:00`;
         }
     }

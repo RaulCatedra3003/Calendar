@@ -110,7 +110,7 @@ h1 {
     margin-left: auto;
 }
 .calendar--month {
-    padding: 0 .4em;
+	padding: 0 .4em;
 }
 .calendar--days {
 	text-align: center;
@@ -301,7 +301,40 @@ h1 {
 	}
 }
 
+/* Animations rules */
 
+@keyframes nextMonth {
+	from {
+		width: 100%;
+	}
+	to {
+		width: 9%;
+	}
+}
+@keyframes prevMonth {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes nextMonthDates {
+	from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes prevMonthDates {
+	from {
+        transform: scale(.1);
+    }
+    to {
+        transform: scale(1);
+    }
+}
 
 
 
