@@ -20,60 +20,15 @@ nextMonth.addEventListener("click", printNextMonth);
 printMonth(monthNumber);
 
 function printMonth (month) {
-    switch (startDay()) {
-        case 0:
-            for(let i = 1; i <= getTotalMonthDays(month); i++) {
-                calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`;
-            }
-            break;
-        case 1:
-            for(let i = 0; i < startDay(); i++) {
-                calendarDates.innerHTML += `<section></section>`;
-            }
-            for(let i = 1; i <= getTotalMonthDays(month); i++) {
-                calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
-            }
-            break;
-        case 2:
-            for(let i = 0; i < startDay(); i++) {
-                calendarDates.innerHTML += `<section></section>`;
-            }
-            for(let i = 1; i <= getTotalMonthDays(month); i++) {
-                calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
-            }
-            break;
-        case 3:
-            for(let i = 0; i < startDay(); i++) {
-                calendarDates.innerHTML += `<section></section>`;
-            }
-            for(let i = 1; i <= getTotalMonthDays(month); i++) {
-                calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
-            }
-            break;
-        case 4:
-            for(let i = 0; i < startDay(); i++) {
-                calendarDates.innerHTML += `<section></section>`;
-            }
-            for(let i = 1; i <= getTotalMonthDays(month); i++) {
-                calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
-            }
-            break;
-        case 5:
-            for(let i = 0; i < startDay(); i++) {
-                calendarDates.innerHTML += `<section></section>`;
-            }
-            for(let i = 1; i <= getTotalMonthDays(month); i++) {
-                calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
-            }
-            break;
-        case 6:
-            for(let i = 0; i < startDay(); i++) {
-                calendarDates.innerHTML += `<section></section>`;
-            }
-            for(let i = 1; i <= getTotalMonthDays(month); i++) {
-                calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
-            }
-            break;
+    for(let i = 0; i < startDay(); i++) {
+        calendarDates.innerHTML += `<section></section>`;
+    }
+    for(let i = 1; i <= getTotalMonthDays(month); i++) {
+        if((currentDate.getDate() === i) && (currentDate.getMonth() === monthNumber) && (currentDate.getFullYear() === currentYear)) {
+            calendarDates.innerHTML += `<section class="calendar--days today--show">${i}</section>`
+        } else {
+            calendarDates.innerHTML += `<section class="calendar--days">${i}</section>`
+        }
     }
 }
 
@@ -120,7 +75,6 @@ function printNextMonth() {
 }
 
 function setNewDate() {
-    currentDate.setFullYear(currentYear, monthNumber, currentDay);
     month.textContent = monthNames[monthNumber];
     year.textContent = currentYear.toString();
     calendarDates.innerHTML = "";
