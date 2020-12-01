@@ -138,15 +138,36 @@ h1 {
 }
 
 /* Modal add event style */
+.modal--section {
+	background-color: rgba(184, 184, 184, 0.7);
+	width: 100%;
+	position: fixed;
+	z-index: 1000;
+	height: 100%;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
 .add--event {
-	border: 1px solid blue;
-	margin-top: 20px;
-	margin: 0 auto;
+	background-color:white;
+	width: fit-content;
+	padding-bottom: 10px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	align-content: stretch;
+	transition: transform 1s;
+	transform: translateY(0%);
+}
+
+.closed--modal {
+	width: 100%;
+	text-align: right;
+	margin: 5px 15px 0 0;
+	cursor: pointer;
 }
 
 .title--new--event {
@@ -158,18 +179,52 @@ h1 {
 .form--add--event {
 	display: flex;
 	flex-direction: column;
-	padding-top: 15px;
-	border: 1px solid orange;
+	padding: 15px 10px;
+}
+
+.label--modal {
+	padding: 10px 0;
+	margin-right: 10px;
+}
+
+.fieldset--modal {
+	padding-top: 10px;
+}
+
+.fieldset--hidden {
+	display: none;
+}
+
+.input--modal {
+	border-radius: 5px;
+}
+
+.description {
+	height: 70px;
+}
+
+.initial--date, .end--date {
+	width: 100%;
+	margin-top: 10px;
+	background-color: rgb(243, 243, 243);
+}
+
+.time-remind-me, .even--type {
+	padding: 2px 5px;
+	background-color: rgb(243, 243, 243);
 }
 
 .button--modal {
-	margin: 0 auto;
+	text-align: center;
 }
 
 .cancel--button--modal, .create--button--modal {
+	font-size: 1em;
 	border-radius: 10px;
+	border: none;
 	padding: 5px 20px;
-	margin: 10px;
+	margin: 5px;
+	box-shadow: 5px 5px rgb(153, 152, 152);
 }
 
 
@@ -197,5 +252,8 @@ h1 {
 	}
 	.buttonAddEvent {
 		height: 30%;
-    }
+	}
+	.modal--section {
+		padding: 30px 50px;
+	}
 }
