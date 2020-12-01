@@ -47,11 +47,17 @@ table {
 	border-spacing: 0;
 }
 
+/* Main style rules */
+
 * {
 	box-sizing: border-box;
 }
+body  {
+	font-family: 'Montserrat';
+}
 
-/* Header style */
+/* Header style rules */
+
 .header-section {
 	display: flex;
 	flex-direction: column;
@@ -60,7 +66,6 @@ table {
 	align-content: stretch;
 	height: 20%;
 }
-
 h1 {
 	font-size: 3em;
 	font-weight: bold;
@@ -69,7 +74,6 @@ h1 {
 	height: fit-content;
 	max-width: 400px;
 }
-
 .buttonAddEvent {
 	font-size: 1em;
 	width: 200px;
@@ -82,6 +86,7 @@ h1 {
 }
 
 /* Calendar rules */
+
 .calendar {
     width: 90%;
     position: relative;
@@ -94,23 +99,18 @@ h1 {
     padding: 1.5em 0;
     text-transform: uppercase;
 }
-
 .calendar--prev, .calendar--next {
     cursor: pointer;
 }
-
 .calendar--prev {
     margin-right: auto;
 }
-
 .calendar--next {
     margin-left: auto;
 }
-
 .calendar--month {
     padding: 0 .4em;
 }
-
 .calendar--days {
 	text-align: center;
 	width: 100%;
@@ -120,18 +120,17 @@ h1 {
 	color: #acacac;
 	font-size: .6em;
 }
-
 .week--days {
 	background: linear-gradient(70deg, rgb(253, 211, 211), red);
 	margin-bottom: 5px;
 }
-
 .days-list {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     font-size: .6em;
     max-width: 100%;
-    text-align: center;
+	text-align: center;
+	column-gap: 2px;
 }
 .day {
     background: transparent;
@@ -139,13 +138,18 @@ h1 {
 	border: 1px solid black;
 	padding: 8px 0;
 }
-
 .calendar--dates {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+	grid-template-columns: repeat(7, 1fr);
+	row-gap: 2px;
+	column-gap: 2px;
+}
+.today--show {
+	background-color: #4474f82a;
 }
 
-/* Footer style */
+/* Footer style rules */
+
 .footer {
 	font-size: 0.7em;
 	text-align: center;
@@ -171,6 +175,13 @@ h1 {
 	}
 	.calendar--days{
 		height: 90px;
+	}
+	.days-list {
+		column-gap: 5px;
+	}
+	.calendar--dates {
+		row-gap: 5px;
+		column-gap: 5px;
 	}
 }
 
