@@ -125,7 +125,7 @@ h1 {
 	text-align: center;
 	justify-content: center;
 	width: 100%;
-	height: 40px;
+	height: 80px;
 	border: 1px solid #c0c0c0;
 	padding: 5px;
 	color: #acacac;
@@ -151,6 +151,7 @@ h1 {
 	color: rgb(65, 65, 65);
 	border: 1px solid black;
 	padding: 8px 0;
+	font-weight: 600;
 }
 .calendar--dates {
     display: grid;
@@ -277,13 +278,17 @@ h1 {
     left: 0;
 }
 
-/* Events style */
+/* Events styles */
 
 .event {
 	text-align: left;
 	border: 1px solid black;
 	margin : 3px 0;
 	color: black;
+	cursor: pointer;
+	overflow: hidden;
+	width: 16px;
+	height: 10px;
 }
 .meeting {
 	background-color: rebeccapurple;
@@ -298,6 +303,27 @@ h1 {
 	background-color: pink;
 }
 
+/* Event info modal styles */
+
+.info--title {
+	text-align: center;
+	font-size: 1.4em;
+	font-weight: bold;
+	margin: 20px 0;
+}
+.info--labels {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 10px 0 10px 10px;
+}
+.info--info {
+	font-size: 1em;
+	margin: 0 20px;
+}
+.button--delete {
+	margin: 20px;
+}
+
 /* Media Query rules */
 
 @media screen and (min-width: 700px) {
@@ -309,7 +335,7 @@ h1 {
 		height: 30%;
 	}
 	.calendar--days{
-		height: 90px;
+		height: 150px;
 	}
 	.days-list {
 		column-gap: 5px;
@@ -318,11 +344,19 @@ h1 {
 		row-gap: 5px;
 		column-gap: 5px;
 	}
+	.event{
+		width: 70px;
+		height: 15px;
+	}
 }
 
 @media screen and (min-width: 1200px) {
 	.calendar--days{
-		height: 120px;
+		height: 180px;
+		font-size: 1.2em;
+	}
+	.calendar--info {
+		font-size: 1.4em;
 	}
 	.calendar {
 		width: 1086px;
@@ -330,6 +364,14 @@ h1 {
 	.header-section {
 		width: 1200px;
 		margin: 0 auto;
+	}
+	.event{
+		width: 130px;
+		height: 20px;
+		font-size: 0.7em;
+	}
+	.day {
+		font-size: 1.2em;
 	}
 }
 

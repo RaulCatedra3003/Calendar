@@ -23,6 +23,9 @@ let endDateValidate = false;
 let remindMeValidate = false;
 let haschange = false;
 
+let contador = -1;
+let position = 0;
+
 month.textContent = monthNames[monthNumber];
 year.textContent = currentYear.toString();
 
@@ -61,20 +64,22 @@ function printMonth (month) {
         let dayId = e.id;
         events.forEach(j => {
             if(j.initialDay == dayId && j.initialMonth == (monthNumber+1) && j.initialYear == currentYear) {
-                if(j.initialDay !== j.endDay){
-
-                }
                 if(j.eventType == "meeting") {
-                    e.innerHTML += `<section class="event meeting">${j.title}</section>`
+                    e.innerHTML += `<section class="event meeting" id="${j.title}">${j.title}</section>`
                 } else if (j.eventType == "study") {
-                    e.innerHTML += `<section class="event study">${j.title}</section>`
+                    e.innerHTML += `<section class="event study" id="${j.title}">${j.title}</section>`
                 } else if (j.eventType == "personal") {
-                    e.innerHTML += `<section class="event personal">${j.title}</section>`
+                    e.innerHTML += `<section class="event personal" id="${j.title}">${j.title}</section>`
                 } else if(j.eventType == "other") {
-                    e.innerHTML += `<section class="event other">${j.title}</section>`
+                    e.innerHTML += `<section class="event other" id="${j.title}">${j.title}</section>`
                 }
             }
         })
+    })
+
+    DOMevents = document.querySelectorAll('.event');
+    DOMevents.forEach(e => {
+        e.addEventListener('click', showEventInfo);
     })
 
     buttonsDays = document.querySelectorAll(".button-day");
@@ -431,15 +436,15 @@ function createNewEvent(e) {
         event.remindBefore = '0';
     }
 
-    let date1 = newInitialDate.value;
-    let date2 = newEndDate.value;
+    let date1 = `${event.initialYear}-${event.initialMonth}-${event.initialDay}T${event.initialHour}:${event.initialMinute}`;
+    let date2 = `${event.finishYear}-${event.finishMonth}-${event.finishDay}T${event.finishHour}:${event.finishMinute}`;
     let date3 = new Date(date1).getTime();
     let date4 = new Date(date2).getTime();
     let diff = date4 - date3;
     let days = (diff/(1000*60*60*24)).toFixed(0);
     let hours = ((diff%(1000*60*60*24))/(1000*60*60)).toFixed(0);
     let minutes = (((diff%(1000*60*60*24))%(1000*60*60))/(1000*60)).toFixed(0);
-    event.duration = `Duration: ${days} days, ${hours} hours and ${minutes} minutes.`;
+    event.duration = `${days} days, ${hours} hours and ${minutes} minutes.`;
 
     events.push(event);
     let eventsString = JSON.stringify(events);
@@ -551,4 +556,127 @@ function refreshEventWithLocalStorage() {
     } else {
         events = JSON.parse(localStorage.getItem("events"));
     }
+}
+
+/* Function to show the modal with the event info */
+
+function showEventInfo(e) {
+    prevMonth.removeEventListener("click", printPrevMonth);
+    nextMonth.removeEventListener("click", printNextMonth);
+    addEvent.removeEventListener("click", showEventModal);
+    buttonsDays.forEach(e => {
+        e.removeEventListener("click", showEventModal);
+    });
+
+    position = 0;
+    contador = -1;
+    events.forEach(j => {
+        contador++
+        if(j.title === e.target.id){
+            position = contador;
+        }
+    })
+
+    let fullInitialDate = `${events[position].initialYear}/${events[position].initialMonth}/${events[position].initialDay}`;
+    let fullEndDate = `${events[position].finishYear}/${events[position].finishMonth}/${events[position].finishDay}`;
+    let initialDate = new Date(fullInitialDate);
+    let initialDateInFormat = new Intl.DateTimeFormat().format(initialDate);
+    let endDate = new Date(fullEndDate);
+    let endDateInFormat = new Intl.DateTimeFormat().format(endDate);
+    let remind = "";
+
+    if(events[position].remind === true){
+        remind = "YES";
+    } else {
+        remind = "NO";
+    }
+
+    modalContent.innerHTML = "";
+    modalContent.innerHTML = `
+    <section>
+        <h2 class="info--title">${events[position].title}</h2>
+        <p class="info--labels">Initial date:</p>
+        <p class="info--info">${initialDateInFormat}</p>
+        <p class="info--labels">Initial time:</p>
+        <p class="info--info">${events[position].initialHour}:${events[position].initialMinute}</p>
+        <p class="info--labels">End date:</p>
+        <p class="info--info">${endDateInFormat}</p>
+        <p class="info--labels">End time:</p>
+        <p class="info--info">${events[position].finishHour}:${events[position].finishMinute}</p>
+        <p class="info--labels">Remind?:</p>
+        <p class="info--info">${remind}</p>
+        <p class="info--labels">Remind me before:</p>
+        <p class="info--info">${events[position].remindBefore}</p>
+        <p class="info--labels">Description:</p>
+        <p class="info--info">${events[position].description}</p>
+        <p class="info--labels">Event type:</p>
+        <p class="info--info">${events[position].eventType}</p>
+        <p class="info--labels">Duration:</p>
+        <p class="info--info">${events[position].duration}</p>
+        <button class="button button--delete" id="delete--event">Delete</button>
+    </section>`;
+
+    modalSection.classList.toggle("hidden");
+
+    deleteModal = document.getElementById("delete--event");
+
+    deleteModal.addEventListener("click", deleteEvent);
+    closeModal.addEventListener("click", hiddenModalInfo);
+    modalSection.addEventListener("click", hiddenModalInfoClickingOut);
+    window.addEventListener("keyup", hiddenModalInfoEscape);
+}
+
+function hiddenModalInfo() {
+    modalSection.classList.toggle("hidden");
+    closeModal.removeEventListener("click", hiddenModal);
+    modalSection.removeEventListener("click", hiddenModalClickingOut);
+    window.removeEventListener("keyup", hiddenModalEscape);
+    deleteModal.removeEventListener("click", deleteEvent);
+    prevMonth.addEventListener("click", printPrevMonth);
+    nextMonth.addEventListener("click", printNextMonth);
+    addEvent.addEventListener("click", showEventModal);
+    buttonsDays.forEach(e => {
+        e.addEventListener("click", showEventModal);
+    });
+}
+function hiddenModalInfoClickingOut(e) {
+    if(e.target.id === "modal--section") {
+        modalSection.classList.toggle("hidden");
+        closeModal.removeEventListener("click", hiddenModal);
+        modalSection.removeEventListener("click", hiddenModalClickingOut);
+        window.removeEventListener("keyup", hiddenModalEscape);
+        deleteModal.removeEventListener("click", deleteEvent);
+        prevMonth.addEventListener("click", printPrevMonth);
+        nextMonth.addEventListener("click", printNextMonth);
+        addEvent.addEventListener("click", showEventModal);
+        buttonsDays.forEach(e => {
+            e.addEventListener("click", showEventModal);
+        });
+    }
+}
+function hiddenModalInfoEscape(e) {
+    if(e.keyCode == 27) {
+        modalSection.classList.toggle("hidden");
+        closeModal.removeEventListener("click", hiddenModal);
+        modalSection.removeEventListener("click", hiddenModalClickingOut);
+        window.removeEventListener("keyup", hiddenModalEscape);
+        deleteModal.removeEventListener("click", deleteEvent);
+        prevMonth.addEventListener("click", printPrevMonth);
+        nextMonth.addEventListener("click", printNextMonth);
+        addEvent.addEventListener("click", showEventModal);
+        buttonsDays.forEach(e => {
+            e.addEventListener("click", showEventModal);
+        });
+    }
+}
+
+/* Function to delete events */
+
+function deleteEvent() {
+    events.splice(position, 1);
+    let eventsString = JSON.stringify(events);
+    localStorage.setItem("events", eventsString);
+    refreshEventWithLocalStorage();
+    hiddenModalInfo();
+    printMonth(monthNumber);
 }
