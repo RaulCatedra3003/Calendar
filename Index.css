@@ -84,6 +84,9 @@ h1 {
 	outline: none;
 	cursor: pointer;
 }
+.button:focus {
+	border: 1px solid black;
+}
 
 
 /* Calendar rules */
@@ -101,10 +104,16 @@ h1 {
     text-transform: uppercase;
 }
 .calendar--prev, .calendar--next {
-    cursor: pointer;
+	cursor: pointer;
+	background: none;
+	border: none;
+	outline: none;
+}
+.calendar--prev:focus, .calendar--next:focus {
+	border: 1px solid black;
 }
 .calendar--prev {
-    margin-right: auto;
+	margin-right: auto;
 }
 .calendar--next {
     margin-left: auto;
@@ -162,6 +171,9 @@ h1 {
 	outline: none;
 	cursor: pointer;
 	display: none;
+}
+.button-day:focus {
+	border: 1px solid black;	
 }
 
 /* Modal add event style */
@@ -265,6 +277,26 @@ h1 {
     left: 0;
 }
 
+/* Events style */
+
+.event {
+	text-align: left;
+	border: 1px solid black;
+	margin : 3px 0;
+	color: black;
+}
+.meeting {
+	background-color: rebeccapurple;
+}
+.personal {
+	background-color: yellow;
+}
+.study {
+	background-color: lightblue;
+}
+.other {
+	background-color: pink;
+}
 
 /* Media Query rules */
 
