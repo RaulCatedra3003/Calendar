@@ -1,3 +1,4 @@
+let events = [];
 let monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
 let currentDate = new Date();
@@ -29,21 +30,53 @@ prevMonth.addEventListener("click", printPrevMonth);
 nextMonth.addEventListener("click", printNextMonth);
 addEvent.addEventListener("click", showEventModal);
 
+refreshEventWithLocalStorage();
 printMonth(monthNumber);
 
 /* Functions to print the months */
 
 function printMonth (month) {
+    calendarDates.innerHTML = "";
     for(let i = 0; i < startDay(); i++) {
         calendarDates.innerHTML += `<section></section>`;
     }
     for(let i = 1; i <= getTotalMonthDays(month); i++) {
         if((currentDate.getDate() === i) && (currentDate.getMonth() === monthNumber) && (currentDate.getFullYear() === currentYear)) {
-            calendarDates.innerHTML += `<section class="calendar--days today--show">${i}<button class="button-day" id="${i}">Add event</button></section>`
+            if (i < 10) {
+                calendarDates.innerHTML += `<section class="calendar--days today--show" id="0${i}">${i}<button class="button-day" id="${i}">Add event</button></section>`
+            } else {
+                calendarDates.innerHTML += `<section class="calendar--days today--show" id="${i}">${i}<button class="button-day" id="${i}">Add event</button></section>`
+            }
         } else {
-            calendarDates.innerHTML += `<section class="calendar--days">${i}<button class="button-day" id="${i}">Add event</button></section>`
+            if (i < 10) {
+                calendarDates.innerHTML += `<section class="calendar--days" id="0${i}">${i}<button class="button-day" id="${i}">Add event</button></section>`
+            } else {
+                calendarDates.innerHTML += `<section class="calendar--days" id="${i}">${i}<button class="button-day" id="${i}">Add event</button></section>`
+            }
         }
     }
+
+    let days = document.querySelectorAll('.calendar--days');
+    days.forEach(e => {
+        let dayId = e.id;
+        events.forEach(j => {
+            if(j.initialDay == dayId && j.initialMonth == (monthNumber+1) && j.initialYear == currentYear) {
+                if(j.initialDay !== j.endDay){
+
+                }
+                if(j.eventType == "meeting") {
+                    e.innerHTML += `<section class="event meeting">${j.title}</section>`
+                } else if (j.eventType == "study") {
+                    e.innerHTML += `<section class="event study">${j.title}</section>`
+                } else if (j.eventType == "personal") {
+                    e.innerHTML += `<section class="event personal">${j.title}</section>`
+                } else if(j.eventType == "other") {
+                    e.innerHTML += `<section class="event other">${j.title}</section>`
+                }
+            }
+        })
+    })
+
     buttonsDays = document.querySelectorAll(".button-day");
     buttonsDays.forEach(e => {
         e.addEventListener("click", showEventModal);
@@ -175,7 +208,6 @@ function showEventModal(e) {
                     <option value="meeting">Meeting</option>
                     <option value="personal">Personal</option>
                     <option value="study">Study</option>
-                    <option value="leisure">Leisure</option>
                     <option value="other" selected>Other</option>
                 </select>
             </fieldset>
@@ -197,16 +229,22 @@ function showEventModal(e) {
     remindMeContent = document.getElementById("remind--me--content");
     cancelButtonAddEvent = document.getElementById("cancel--button--addEvent");
     createEventButton = document.getElementById("create--new--event");
+    newDescription = document.getElementById("description");
+    newEventType = document.getElementById("even--type");
 
     if((parseInt(e.target.id)) > 0 && (parseInt(e.target.id)) <= 31) {
         if((parseInt(e.target.id)) < 10 && (monthNumber+1) >= 10) {
             newInitialDate.value = `${currentYear}-${monthNumber+1}-0${parseInt(e.target.id)}T00:00`;
+            initialDateValidate = true;
         } else if((parseInt(e.target.id)) < 10 && (monthNumber+1) < 10) {
             newInitialDate.value = `${currentYear}-0${monthNumber+1}-0${parseInt(e.target.id)}T00:00`;
+            initialDateValidate = true;
         } else if ((parseInt(e.target.id)) >= 10 && (monthNumber+1) < 10) {
             newInitialDate.value = `${currentYear}-0${monthNumber+1}-${parseInt(e.target.id)}T00:00`;
+            initialDateValidate = true;
         } else if ((parseInt(e.target.id)) >= 10 && (monthNumber+1) >= 10) {
             newInitialDate.value = `${currentYear}-${monthNumber+1}-${parseInt(e.target.id)}T00:00`;
+            initialDateValidate = true;
         }
     }
 
@@ -305,9 +343,10 @@ function hiddenModalEscape(e) {
         });
     }
 }
-function showEnDate() {
+function showEnDate(e) {
     createEventButton.disabled = true;
     endDateContent.classList.toggle("fieldset--hidden");
+    console.log(e);
 }
 function showRemindMe() {
     createEventButton.disabled = true;
@@ -316,8 +355,98 @@ function showRemindMe() {
 
 /* Functions to create new event */
 
-function createNewEvent() {
+function createNewEvent(e) {
+    e.preventDefault();
+    let event = {
+        title: '',
+        initialYear: '',
+        initialMonth: '',
+        initialDay: '',
+        initialHour: '',
+        initialMinute: '',
+        finishYear: '',
+        finishMonth: '',
+        finishDay: '',
+        finishHour: '',
+        finishMinute: '',
+        remind: false,
+        remindBefore: '',
+        description: '',
+        eventType: '',
+        duration: ''
+    }
 
+    let eInitialDateAndTime = newInitialDate.value.split("T");
+    let eInitialDate = eInitialDateAndTime[0].split("-");
+    let eInitialTime = eInitialDateAndTime[1].split(":");
+
+    event.title = newTitle.value;
+    event.initialYear = eInitialDate[0];
+    event.initialMonth = eInitialDate[1];
+    event.initialDay = eInitialDate[2];
+    event.initialHour = eInitialTime[0];
+    event.initialMinute = eInitialTime[1];
+    event.description = newDescription.value;
+    event.eventType = newEventType.value;
+
+    if(checkEndDate.checked === true && checkRemindMe.checked === true) {
+        let eFinishDateAndTime = newEndDate.value.split("T");
+        let eFinishDate = eFinishDateAndTime[0].split("-");
+        let eFinishTime = eFinishDateAndTime[1].split(":");
+
+        event.finishYear = eFinishDate[0];
+        event.finishMonth = eFinishDate[1];
+        event.finishDay = eFinishDate[2];
+        event.finishHour = eFinishTime[0];
+        event.finishMinute = eFinishTime[1];
+        event.remind = true;
+        event.remindBefore = newRemindMe.value;
+    } else if (checkEndDate.checked === false && checkRemindMe.checked === true){
+        event.finishYear = eInitialDate[0];
+        event.finishMonth = eInitialDate[1];
+        event.finishDay = eInitialDate[2];
+        event.finishHour = '23';
+        event.finishMinute = '59';
+        event.remind = true;
+        event.remindBefore = newRemindMe.value;
+    } else if (checkEndDate.checked === true && checkRemindMe.checked === false) {
+        let eFinishDateAndTime = newEndDate.value.split("T");
+        let eFinishDate = eFinishDateAndTime[0].split("-");
+        let eFinishTime = eFinishDateAndTime[1].split(":");
+
+        event.finishYear = eFinishDate[0];
+        event.finishMonth = eFinishDate[1];
+        event.finishDay = eFinishDate[2];
+        event.finishHour = eFinishTime[0];
+        event.finishMinute = eFinishTime[1];
+        event.remind = false;
+        event.remindBefore = '0';
+    } else if(checkEndDate.checked === false && checkRemindMe.checked === false) {
+        event.finishYear = eInitialDate[0];
+        event.finishMonth = eInitialDate[1];
+        event.finishDay = eInitialDate[2];
+        event.finishHour = '23';
+        event.finishMinute = '59';
+        event.remind = false;
+        event.remindBefore = '0';
+    }
+
+    let date1 = newInitialDate.value;
+    let date2 = newEndDate.value;
+    let date3 = new Date(date1).getTime();
+    let date4 = new Date(date2).getTime();
+    let diff = date4 - date3;
+    let days = (diff/(1000*60*60*24)).toFixed(0);
+    let hours = ((diff%(1000*60*60*24))/(1000*60*60)).toFixed(0);
+    let minutes = (((diff%(1000*60*60*24))%(1000*60*60))/(1000*60)).toFixed(0);
+    event.duration = `Duration: ${days} days, ${hours} hours and ${minutes} minutes.`;
+
+    events.push(event);
+    let eventsString = JSON.stringify(events);
+    localStorage.setItem('events', eventsString);
+    refreshEventWithLocalStorage();
+    hiddenModal();
+    printMonth(monthNumber);
 }
 
 /* Functions to validate new event form */
@@ -336,7 +465,8 @@ function validateTitle(e) {
     }
 }
 function validateInitalDate(e) {
-    var dateTime = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$/
+    console.log(e);
+    var dateTime = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
     if (newInitialDate.value.match(dateTime)) {
         initialDateValidate = true;
         activateCreateButton();
@@ -350,8 +480,10 @@ function validateInitalDate(e) {
     }
 }
 function validateEndDate(e) {
-    var dateTime = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$/
-    if (newEndDate.value.match(dateTime)) {
+    let initialDate = new Date(newInitialDate.value).getTime();
+    let endDate = new Date(newEndDate.value).getTime();
+    var dateTime = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
+    if (newEndDate.value.match(dateTime) && (endDate - initialDate)> 0) {
         endDateValidate = true;
         activateCreateButton();
     } else {
@@ -407,5 +539,16 @@ function activateCreateButton() {
         if(titleValidate === true && initialDateValidate === true && endDateValidate === false && remindMeValidate === false) {
             createEventButton.disabled = false;
         }
+    }
+}
+
+/* Function to take events from localStorage */
+
+function refreshEventWithLocalStorage() {
+    if(localStorage.getItem('events') === null) {
+        let eventsString = JSON.stringify(events);
+        localStorage.setItem('events', eventsString);
+    } else {
+        events = JSON.parse(localStorage.getItem("events"));
     }
 }
