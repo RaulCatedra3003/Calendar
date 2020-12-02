@@ -10,38 +10,46 @@
     <title>Document</title>
 </head>
 <body>
-    <header>
-        <section class="header-section">
-            <h1>JS Calendar</h1>
-            <button class="button" id="buttonAddEvent">Add event</button>
-        </section>
-    </header>
-    <section class="calendar">
-        <section class="calendar--info">
-            <button class="calendar--prev fas fa-chevron-circle-left" id="prev--month"></button>
-            <section class="calendar--month" id="calendar--month"></section>
-            <section class="calendar--year" id="calendar--year"></section>
-            <button class="calendar--next fas fa-chevron-circle-right" id="next--month"></button>
-        </section>
-        <section class="calendar--all">
-            <section class="week--days">
-                <ul class="days-list">
-                    <li class="day">LUN</li>
-                    <li class="day">MAR</li>
-                    <li class="day">MIÉ</li>
-                    <li class="day">JUE</li>
-                    <li class="day">VIE</li>
-                    <li class="day">SÁB</li>
-                    <li class="day">DOM</li>
-                </ul>
+    <section class="all--content">
+        <section class="content">
+            <header>
+                <section class="header-section">
+                    <h1>JS Calendar</h1>
+                    <button class="button" id="buttonAddEvent">Add event</button>
+                </section>
+            </header>
+            <section class="calendar">
+                <section class="calendar--info">
+                    <button class="calendar--prev fas fa-chevron-circle-left" id="prev--month"></button>
+                    <section class="calendar--month" id="calendar--month"></section>
+                    <section class="calendar--year" id="calendar--year"></section>
+                    <button class="calendar--next fas fa-chevron-circle-right" id="next--month"></button>
+                </section>
+                <section class="calendar--all">
+                    <section class="week--days">
+                        <ul class="days-list">
+                            <li class="day">LUN</li>
+                            <li class="day">MAR</li>
+                            <li class="day">MIÉ</li>
+                            <li class="day">JUE</li>
+                            <li class="day">VIE</li>
+                            <li class="day">SÁB</li>
+                            <li class="day">DOM</li>
+                        </ul>
+                    </section>
+                    <section class="calendar--dates" id="calendar--dates"></section>
+                </section>
             </section>
-            <section class="calendar--dates" id="calendar--dates"></section>
+            <section class="modal--section hidden" id="modal--section">
+                <section  class="add--event">
+                    <p class="closed--modal far fa-times-circle" id="close--modal"></p>
+                    <section class="modal--content" id="modal--content"></section>
+                </section>
+            </section>
         </section>
-    </section>
-    <section class="modal--section hidden" id="modal--section">
-        <section  class="add--event">
-            <p class="closed--modal far fa-times-circle" id="close--modal"></p>
-            <section class="modal--content" id="modal--content"></section>
+        <section class="warning hidden" id="warning--hidden">
+            <section class="title">Past events:</section>
+            <section id="warning"></section>
         </section>
     </section>
     <footer class="footer">

@@ -16,6 +16,8 @@ const modalSection = document.getElementById("modal--section");
 const modalContent = document.getElementById("modal--content");
 const closeModal = document.getElementById("close--modal");
 const calendarInfo = document.querySelector(".calendar--info");
+const warning = document.getElementById("warning");
+const warningHidden = document.getElementById("warning--hidden");
 
 let titleValidate = false;
 let initialDateValidate = false;
@@ -35,11 +37,13 @@ addEvent.addEventListener("click", showEventModal);
 
 refreshEventWithLocalStorage();
 printMonth(monthNumber);
+setInterval(remindEvent, 10000);
 
 /* Functions to print the months */
 
 function printMonth (month) {
     calendarDates.innerHTML = "";
+    checkPastEvent();
     for(let i = 0; i < startDay(); i++) {
         calendarDates.innerHTML += `<section></section>`;
     }
@@ -65,13 +69,29 @@ function printMonth (month) {
         events.forEach(j => {
             if(j.initialDay == dayId && j.initialMonth == (monthNumber+1) && j.initialYear == currentYear) {
                 if(j.eventType == "meeting") {
-                    e.innerHTML += `<section class="event meeting" id="${j.title}">${j.title}</section>`
+                    if(j.past === true) {
+                        e.innerHTML += `<section class="event meeting past" id="${j.title}">${j.title}</section>`;
+                    } else {
+                        e.innerHTML += `<section class="event meeting" id="${j.title}">${j.title}</section>`
+                    }
                 } else if (j.eventType == "study") {
-                    e.innerHTML += `<section class="event study" id="${j.title}">${j.title}</section>`
+                    if(j.past === true) {
+                        e.innerHTML += `<section class="event study past" id="${j.title}">${j.title}</section>`;
+                    } else {
+                        e.innerHTML += `<section class="event study" id="${j.title}">${j.title}</section>`
+                    }
                 } else if (j.eventType == "personal") {
-                    e.innerHTML += `<section class="event personal" id="${j.title}">${j.title}</section>`
+                    if(j.past === true) {
+                        e.innerHTML += `<section class="event personal past" id="${j.title}">${j.title}</section>`;
+                    } else {
+                        e.innerHTML += `<section class="event personal" id="${j.title}">${j.title}</section>`
+                    }
                 } else if(j.eventType == "other") {
-                    e.innerHTML += `<section class="event other" id="${j.title}">${j.title}</section>`
+                    if(j.past === true) {
+                        e.innerHTML += `<section class="event other past" id="${j.title}">${j.title}</section>`;
+                    } else {
+                        e.innerHTML += `<section class="event other" id="${j.title}">${j.title}</section>`
+                    }
                 }
             }
         })
@@ -378,7 +398,8 @@ function createNewEvent(e) {
         remindBefore: '',
         description: '',
         eventType: '',
-        duration: ''
+        duration: '',
+        past: false
     }
 
     let eInitialDateAndTime = newInitialDate.value.split("T");
@@ -470,7 +491,6 @@ function validateTitle(e) {
     }
 }
 function validateInitalDate(e) {
-    console.log(e);
     var dateTime = /^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
     if (newInitialDate.value.match(dateTime)) {
         initialDateValidate = true;
@@ -679,4 +699,47 @@ function deleteEvent() {
     refreshEventWithLocalStorage();
     hiddenModalInfo();
     printMonth(monthNumber);
+}
+
+/* Function to check past event */
+
+function checkPastEvent() {
+    warning.innerHTML = "";
+    events.forEach(e => {
+        let finishDateFormat = `${e.finishYear}-${e.finishMonth}-${e.finishDay}T${e.finishHour}:${e.finishMinute}`
+        let finishDate = new Date(finishDateFormat).getTime();
+        let actualTime = new Date().getTime();
+        if(actualTime > finishDate) {
+            e.past = true;
+            let eventsString = JSON.stringify(events);
+            localStorage.setItem('events', eventsString);
+        } else {
+            e.past = false;
+            let eventsString = JSON.stringify(events);
+            localStorage.setItem('events', eventsString);
+        }
+        if(e.past === true) {
+            warning.innerHTML += `<section class="event--past" id="${e.title}">${e.title}</section>`;
+            warningHidden.classList.remove("hidden");
+        }
+    })
+}
+
+/* Function to remind an event */
+
+function remindEvent() {
+    events.forEach(e => {
+        if(e.remind === true) {
+            let initialDateFormat = `${e.initialYear}-${e.initialMonth}-${e.initialDay}T${e.initialHour}:${e.initialMinute}`;
+            let initialDate = new Date(initialDateFormat).getTime();
+            let remindTime = (parseInt(e.remindBefore, 10))*60*1000;
+            let actualTime = new Date().getTime();
+            if(actualTime >= (initialDate - remindTime) && actualTime <= initialDate){
+                alert(`You have ${e.remindBefore} minutes before ${e.title} start!`);
+                e.remind = false;
+                let eventsString = JSON.stringify(events);
+                localStorage.setItem('events', eventsString);
+            }
+        }
+    })
 }
