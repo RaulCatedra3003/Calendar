@@ -65,9 +65,14 @@ function printMonth (month) {
 
     let days = document.querySelectorAll('.calendar--days');
     days.forEach(e => {
-        let dayId = e.id;
+        let dayDate = `${currentYear}-${monthNumber+1}-${e.id}`;
+        let dayMiliseconds = new Date(dayDate).getTime();
         events.forEach(j => {
-            if(j.initialDay == dayId && j.initialMonth == (monthNumber+1) && j.initialYear == currentYear) {
+            let initialDate = `${j.initialYear}-${j.initialMonth}-${j.initialDay}`;
+            let finishDate = `${j.finishYear}-${j.finishMonth}-${j.finishDay}`;
+            let initialDateMiliseconds = new Date(initialDate).getTime();
+            let finishDateMiliseconds = new Date(finishDate).getTime();
+            if(dayMiliseconds >= initialDateMiliseconds && dayMiliseconds <= finishDateMiliseconds) {
                 if(j.eventType == "meeting") {
                     if(j.past === true) {
                         e.innerHTML += `<section class="event meeting past" id="${j.title}">${j.title}</section>`;
