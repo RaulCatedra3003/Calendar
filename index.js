@@ -650,7 +650,6 @@ function showEventInfo(e) {
     modalSection.addEventListener("click", hiddenModalInfoClickingOut);
     window.addEventListener("keyup", hiddenModalInfoEscape);
 }
-
 function hiddenModalInfo() {
     modalSection.classList.toggle("hidden");
     closeModal.removeEventListener("click", hiddenModal);
