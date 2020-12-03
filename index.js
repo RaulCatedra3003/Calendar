@@ -201,7 +201,7 @@ function showEventModal(e) {
                 <p class="error-msg error-hiden" id="error-initial--date">Please, select date</p>
             </fieldset>
             <fieldset class="fieldset--modal">
-                <input type="checkbox" id="check-end-date" class="check-end-date input--modal" name="check-end-date">
+                <input type="checkbox" id="check-end-date" class="check-end-date input--modal--checkbox" name="check-end-date">
                 <label for="check-end-date" class="label--modal">End date</label>
             </fieldset>
             <fieldset class="fieldset--modal fieldset--hidden" id="end--date--content">
@@ -210,7 +210,7 @@ function showEventModal(e) {
                 <p class="error-msg error-hiden" id="error-end--date">Please, select date</p>
             </fieldset>
             <fieldset class="fieldset--modal">
-                <input type="checkbox" id="check-remind-me" class="check-remind-me input--modal" name="check-remind-me">
+                <input type="checkbox" id="check-remind-me" class="check-remind-me input--modal--checkbox" name="check-remind-me">
                 <label for="check-remind-me" class="label--modal">Remind me when this event expires</label>
             </fieldset>
             <fieldset class="fieldset--modal fieldset--hidden" id="remind--me--content">

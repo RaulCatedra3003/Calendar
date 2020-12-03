@@ -103,6 +103,8 @@ h1 {
 	box-shadow: 5px 5px rgb(153, 152, 152);
 	outline: none;
 	cursor: pointer;
+	min-width: 44px;
+	min-height: 44px;
 }
 .button:focus {
 	border: 1px solid black;
@@ -192,6 +194,8 @@ h1 {
 	outline: none;
 	cursor: pointer;
 	display: none;
+	min-width: 44px;
+	min-height: 44px;
 }
 .button-day:focus {
 	border: 1px solid black;
@@ -251,6 +255,12 @@ h1 {
 }
 .input--modal {
 	border-radius: 5px;
+	min-width: 44px;
+	min-height: 44px;
+}
+.input--modal--checkbox {
+	width: 20px;
+	height: 20px;
 }
 .description {
 	height: 70px;
